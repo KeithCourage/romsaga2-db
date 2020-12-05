@@ -23,11 +23,13 @@ import { MatSort } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TechTableComponent } from './tech-table/tech-table.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TechTableComponent
+    TechTableComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule,
