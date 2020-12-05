@@ -1,0 +1,18 @@
+.techs-container {
+  height: 85vh;
+  padding: 0 16px;
+  overflow: auto;
+  width: 100vw;
+}
+
+.mat-cell {
+  padding: 8px;
+}
+
+tr:hover {
+  background-color: rgb(230, 255, 255);
+}
+
+.mat-header-sticky:hover {
+  background-color: white;
+}
