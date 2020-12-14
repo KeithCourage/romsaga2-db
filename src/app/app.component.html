@@ -1,6 +1,7 @@
 <div class="container" gdAreas="header header header| main main side| footer footer footer">
-  <app-top-bar gdArea="header"></app-top-bar>
+  <app-top-bar gdArea="header" (toggleFilterBarEvent)="filterBar.toggleShown()"></app-top-bar>
   <div class="router-outlet" gdColumn="main-start / side-end" gdRow="main-start / main-end">
     <router-outlet></router-outlet>
   </div>
+  <app-filter-bar gdArea="side" gdColumn="side-start / side-end" gdRow="main-start / main-end" #filterBar></app-filter-bar>
 </div>

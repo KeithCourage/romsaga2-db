@@ -24,12 +24,14 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TechTableComponent } from './tech-table/tech-table.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TechTableComponent,
-    TopBarComponent
+    TopBarComponent,
+    FilterBarComponent
   ],
   imports: [
     BrowserModule,

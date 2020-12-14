@@ -2,7 +2,7 @@
   <a [routerLink]="['/']">
     <h1>RS2 Techs</h1>
   </a>
-  <button class="filter-button" mat-mini-fab aria-label="Filter">
+  <button class="filter-button" mat-mini-fab aria-label="Filter" (click)="sendToggleFilterBarEvent()">
           <mat-icon>filter_list</mat-icon>
   </button>
 </div>

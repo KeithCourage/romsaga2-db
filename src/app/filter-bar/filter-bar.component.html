@@ -1,0 +1,93 @@
+<mat-drawer-container scrollable="true" class="sideNavContainer">
+	<mat-drawer #drawer mode="over" position="end" class="sideNav" gdAreas="title | weapons | magic">
+		<div class="title" gdArea="title">
+			<h2 class="toggle-title">Filter</h2>
+			<button mat-flat-button class="toggle" (click)="toggleShown()">
+        <!-- Hide -->
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+		</div>
+
+		<mat-accordion>
+			<!-- Search Panel -->
+			<mat-expansion-panel (afterExpand)="searchInput.focus()">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{searchInput.value ? searchInput.value : "Search"}}
+					</mat-panel-title>
+          <mat-icon *ngIf="searchInput.value">search</mat-icon>
+				</mat-expansion-panel-header>
+				<div>
+					<mat-form-field>
+						<mat-label>Search</mat-label>
+						<input #searchInput matInput (keyup)="applySearchFilter(searchInput.value)">
+						<button mat-button *ngIf="searchInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput.value='';applySearchFilter(searchInput.value)">
+						<mat-icon>close</mat-icon>
+						</button>
+					</mat-form-field>
+				</div>
+			</mat-expansion-panel>
+			<!-- Filter Group Panels -->
+			<mat-expansion-panel *ngFor="let filterGroup of filterGroups">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{filterGroup.groupName}}
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<div class="filter-group">
+					<span class="filter-section">
+              <mat-checkbox
+                class="filter-margin"
+                [checked]="childrenAllSelected(filterGroup.groupKey, filterGroup.filters)"
+                [indeterminate]="childrenPartiallySelected(filterGroup.groupKey, filterGroup.filters)"
+                [color]="filterGroup.filters.color"
+                (change)="filterSelectionToggle(filterGroup.groupKey, filterGroup.filters)"
+              >
+                {{filterGroup.filters.name}}
+              </mat-checkbox>
+            </span>
+					<span class="filter-sub-section">
+              <ul>
+                <li *ngFor="let subFilter of filterGroup.filters.subfilters">
+                  <mat-checkbox
+                    class="filter-margin"
+                    [checked]="childrenAllSelected(filterGroup.groupKey, subFilter)"
+                    [indeterminate]="childrenPartiallySelected(filterGroup.groupKey, subFilter)"
+                    [color]="subFilter.color"
+                    (change)="filterSelectionToggle(filterGroup.groupKey, subFilter, filterGroup.filters)"
+                  >
+                    {{subFilter.name}}
+                  </mat-checkbox>
+                  <button mat-button *ngIf="hasChildren(subFilter)"
+                          class="filter-expand"
+                          [attr.aria-label]="'Toggle ' + subFilter.name"
+                          (click)="toggleExpanded(subFilter)"
+                  >
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{isExpanded(subFilter) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+						<span class="filter-sub-section">
+                    <ul *ngIf="isExpanded(subFilter)">
+                      <li *ngFor="let subSubFilter of subFilter.subfilters">
+                        <mat-checkbox
+                          class="filter-margin"
+                          [checked]="childrenAllSelected(filterGroup.groupKey, subSubFilter)"
+                          [indeterminate]="childrenPartiallySelected(filterGroup.groupKey, subSubFilter)"
+                          [color]="subSubFilter.color"
+                          (change)="filterSelectionToggle(filterGroup.groupKey, subSubFilter, subFilter, filterGroup.filters)"
+                        >
+                          {{subSubFilter.name}}
+                        </mat-checkbox>
+                      </li>
+                    </ul>
+                  </span>
+					</li>
+					</ul>
+					</span>
+				</div>
+			</mat-expansion-panel>
+		</mat-accordion>
+	</mat-drawer>
+	<mat-drawer-content class="sideNavContent"> </mat-drawer-content>
+</mat-drawer-container>
