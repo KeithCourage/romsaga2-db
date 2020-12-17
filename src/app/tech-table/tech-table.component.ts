@@ -3,6 +3,9 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 
+import { FilterService } from "../shared/filter.service";
+import { FilterChecker } from "../shared/filter-checker";
+
 import { techs } from "../shared/techs";
 
 import { TechData } from "../shared/tech-data.model";
@@ -22,7 +25,7 @@ export class TechTableComponent implements OnInit, AfterViewInit {
   sortBy = "weaponType";
   reverseSort = false;
 
-  constructor(){}
+  constructor(private filterService: FilterService) {}
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
@@ -33,18 +36,47 @@ export class TechTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.filterService.filterChanged$.subscribe(() => this.onFiltered());
+    this.filterService.columnFilterChanged$.subscribe(() =>
+      this.onColumnsFiltered()
+    );
+    this.filterService.searchFilterChanged$.subscribe(() =>
+      this.onSearchFiltered()
+    );
   }
 
   onSearchFiltered() {
+    this.dataSource.filter = this.filterService.SearchFilter.trim().toLowerCase();
   }
 
   onFiltered() {
+    this.dataSource.data = this.applyFilters();
   }
 
   applyFilters() {
+    var filters: {
+      [key: string]: FilterChecker;
+    } = this.filterService.getFilters();
+    var filteredTechs = techs;
+    //filter techs for each key (column) in filters
+
+    for (var key in filters) {
+      filteredTechs = filteredTechs.filter(tech =>
+        filters[key](tech[key as keyof TechData])
+      );
+    }
+    return filteredTechs;
   }
 
   onColumnsFiltered() {
+    let columnNames = this.filterService.ColumnFilter;
+    //change column names to camel case to match techs data format
+    for (let i = 0; i < columnNames.length; i++) {
+      let lowerCasedLetter = columnNames[i][0].toLowerCase();
+      let formattedName = columnNames[i].replace(" ", "");
+      // columnNames[i] = lowerCasedLetter + formattedName.slice(1);
+    }
+    this.columnsToDisplay = columnNames;
   }
 
   getPageSizeOptions() {
