@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { HttpClientModule } from "@angular/common/http";
 
 //Angular Material Modules
 import { MatSidenavModule } from "@angular/material/sidenav";
@@ -25,13 +26,15 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TechTableComponent } from './tech-table/tech-table.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TechTableComponent,
     TopBarComponent,
-    FilterBarComponent
+    FilterBarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { FilterBarComponent } from './filter-bar/filter-bar.component';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    HttpClientModule,
     MatSidenavModule,
     MatTableModule,
     MatInputModule,
