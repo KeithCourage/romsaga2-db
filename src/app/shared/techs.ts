@@ -6307,7 +6307,7 @@ export const techs: TechData[] = [
     type15: "N"
   },
   {
-    name: "'Death''s Scythe'",
+    name: "Death's Scythe",
     weaponType: "Unarmed",
     power: "",
     damageType: "Status",
